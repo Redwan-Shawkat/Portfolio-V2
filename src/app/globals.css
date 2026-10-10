@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+/* Design tokens lifted from the zusee template.
+   Body text is #9c9484, not the template's #746d5d — that only reaches
+   3.8:1 on this ground and fails WCAG AA. Same hue, 6.6:1. */
+@theme {
+  --color-ground: #0b070d;
+  --color-panel: #0e0911;
+  --color-ink: #060407;
+  --color-heading: #f9e6b8;
+  --color-muted: rgba(249, 230, 184, 0.62);
+  --color-body: #9c9484;
+  --color-accent: #f04242;
+  --color-line: rgba(249, 230, 184, 0.1);
+  --color-line-strong: rgba(249, 230, 184, 0.25);
+
+  --font-display: var(--font-vazirmatn), sans-serif;
+  --font-body: var(--font-anek), sans-serif;
+}
+
+@layer base {
+  body {
+    background: var(--color-ground);
+    color: var(--color-body);
+    font-family: var(--font-body);
+    line-height: 1.7;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--color-heading);
+  }
+
+  a {
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  a:hover {
+    color: var(--color-heading);
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+/* Hero slide backgrounds — swap for photos by dropping them in
+   /public/slider and setting a background-image here. */
+.glow-warm {
+  background:
+    radial-gradient(900px 520px at 18% 12%, rgba(249, 230, 184, 0.17), transparent 70%),
+    radial-gradient(760px 520px at 86% 88%, rgba(240, 66, 66, 0.22), transparent 70%),
+    var(--color-ground);
+}
+
+.glow-red {
+  background:
+    radial-gradient(880px 540px at 80% 18%, rgba(240, 66, 66, 0.26), transparent 70%),
+    radial-gradient(720px 480px at 12% 84%, rgba(249, 230, 184, 0.14), transparent 72%),
+    var(--color-ground);
+}
+
+.glow-mix {
+  background:
+    radial-gradient(820px 560px at 50% 6%, rgba(249, 230, 184, 0.2), transparent 68%),
+    radial-gradient(640px 440px at 88% 92%, rgba(240, 66, 66, 0.18), transparent 70%),
+    var(--color-ground);
+}
+
+/* Scroll reveal — replaces the template's scrollCue dependency. */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Cursor ring. The native cursor stays visible so nothing gets hard to click. */
+.cursor-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1px solid rgba(249, 230, 184, 0.45);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0;
+  transition: transform 0.12s ease-out, opacity 0.3s, background-color 0.3s,
+    border-color 0.3s;
+}
+
+@media (hover: none) {
+  .cursor-ring {
+    display: none;
+  }
+}
